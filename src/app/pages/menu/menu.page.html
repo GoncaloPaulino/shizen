@@ -1,0 +1,26 @@
+<ion-split-pane>
+
+  <ion-menu contentId="content">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">
+          <ion-item [routerLink]="p.url" routerDirection="root" [class.active-item]="selectedPath === p.url">
+            <ion-icon name="{{ p.icon }}" class="menu-icon"></ion-icon> <span class="menu-label">{{ p.title }}</span>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-item class="ion-activatable" (click)="logout()">
+          <ion-icon name="log-out" class="menu-icon"></ion-icon> <span class="menu-label">Sair</span>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="content" main></ion-router-outlet>
+
+</ion-split-pane>

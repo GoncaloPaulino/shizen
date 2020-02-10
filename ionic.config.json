@@ -1,0 +1,8 @@
+{
+  "name": "Shizen",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

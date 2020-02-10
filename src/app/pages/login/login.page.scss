@@ -1,0 +1,61 @@
+.shizen{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    width: 65%;
+}
+
+.title{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    width: 55%;
+}
+
+.background{
+    --background: #fff url(../../../assets/bg-auth.png) no-repeat center center / 100% 100%;
+}
+
+#auth-form{
+    position: absolute;
+    width: 100%;
+    top: 45%;
+    transform: translateY(-45%);
+}
+
+.input-auth{
+    color:white;
+    border-bottom: 1px solid white;
+    --placeholder-color: white;
+    --placeholder-opacity: 0.7;
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.input-auth:active{
+    outline: none !important;
+    border-bottom:1px solid #e8e8e8;
+    color: #e8e8e8;
+    --placeholder-color: #e8e8e8;
+}
+
+.btn-auth{
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+#register-block{
+    position: absolute;
+    width: 100%;
+    top: 80%;
+    transform: translateY(-80%);
+}
+
+#register-text{
+    text-align: center;
+    color: white;
+    text-decoration: underline;
+}
