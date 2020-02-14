@@ -63,7 +63,9 @@ def recognize(body=None):  # noqa: E501
     :type body: dict | bytes
 
     :rtype: Plant
-    """
-    if connexion.request.is_json:
-        body = Object.from_dict(connexion.request.get_json())  # noqa: E501
-    return body
+   """
+
+    with open('C:\\Users\\trwyg\\Desktop\\file.png', 'wb') as file:
+        file.write(body)
+
+    return get_plant(1)
