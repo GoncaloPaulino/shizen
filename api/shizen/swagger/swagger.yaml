@@ -34,17 +34,17 @@ paths:
         "401":
           description: error
       x-openapi-router-controller: shizen.controllers.default_controller
-  /plant:
+  /plant/{idx}:
     get:
       description: Returns info about a specific plant.
       operationId: get_plant
       parameters:
-      - name: id
-        in: query
+      - name: idx
+        in: path
         description: The plant ID
         required: true
-        style: form
-        explode: true
+        style: simple
+        explode: false
         schema:
           minimum: 1
           type: integer
@@ -54,12 +54,31 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Plant'
-                x-content-type: application/json
+                $ref: '#/components/schemas/Plant'
         "401":
           description: error
+      x-openapi-router-controller: shizen.controllers.default_controller
+  /recognize:
+    post:
+      description: Recognizes which plant is in a specific image.
+      operationId: recognize
+      requestBody:
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plant'
+        "401":
+          description: error
+        "402":
+          description: plant not found
       x-openapi-router-controller: shizen.controllers.default_controller
 components:
   schemas:
@@ -67,15 +86,14 @@ components:
       required:
       - common_name
       - description
-      - id
+      - idx
       - image_url
       - label_name
       - scientific_name
       type: object
       properties:
-        id:
+        idx:
           type: integer
-          format: id
           example: 1
         common_name:
           type: string
@@ -96,7 +114,7 @@ components:
         image_url: https://aa.com/adasda.jpg
         description: descricao
         scientific_name: Avorus
-        id: 1
+        idx: 1
         common_name: Arvore
         label_name: arvore1
 

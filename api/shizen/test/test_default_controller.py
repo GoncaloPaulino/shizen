@@ -28,11 +28,23 @@ class TestDefaultController(BaseTestCase):
 
         
         """
-        query_string = [('id', 2)]
         response = self.client.open(
-            '/plant',
-            method='GET',
-            query_string=query_string)
+            '/plant/{idx}'.format(idx=2),
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_recognize(self):
+        """Test case for recognize
+
+        
+        """
+        body = Object()
+        response = self.client.open(
+            '/recognize',
+            method='POST',
+            data=json.dumps(body),
+            content_type='image/png')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

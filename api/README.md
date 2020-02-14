@@ -21,13 +21,13 @@ python3 -m shizen
 and open your browser to here:
 
 ```
-http://localhost:8080/ui/
+http://localhost:8080/GoncaloPaulino/Shizen/1.0.0/ui/
 ```
 
 Your Swagger definition lives here:
 
 ```
-http://localhost:8080/swagger.json
+http://localhost:8080/GoncaloPaulino/Shizen/1.0.0/swagger.json
 ```
 
 To launch the integration tests, use tox:

@@ -14,11 +14,11 @@ class Plant(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: int=None, common_name: str=None, scientific_name: str=None, label_name: str=None, description: str=None, image_url: str=None):  # noqa: E501
+    def __init__(self, idx: int=None, common_name: str=None, scientific_name: str=None, label_name: str=None, description: str=None, image_url: str=None):  # noqa: E501
         """Plant - a model defined in Swagger
 
-        :param id: The id of this Plant.  # noqa: E501
-        :type id: int
+        :param idx: The idx of this Plant.  # noqa: E501
+        :type idx: int
         :param common_name: The common_name of this Plant.  # noqa: E501
         :type common_name: str
         :param scientific_name: The scientific_name of this Plant.  # noqa: E501
@@ -31,7 +31,7 @@ class Plant(Model):
         :type image_url: str
         """
         self.swagger_types = {
-            'id': int,
+            'idx': int,
             'common_name': str,
             'scientific_name': str,
             'label_name': str,
@@ -40,14 +40,14 @@ class Plant(Model):
         }
 
         self.attribute_map = {
-            'id': 'id',
+            'idx': 'idx',
             'common_name': 'common_name',
             'scientific_name': 'scientific_name',
             'label_name': 'label_name',
             'description': 'description',
             'image_url': 'image_url'
         }
-        self._id = id
+        self._idx = idx
         self._common_name = common_name
         self._scientific_name = scientific_name
         self._label_name = label_name
@@ -66,27 +66,27 @@ class Plant(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> int:
-        """Gets the id of this Plant.
+    def idx(self) -> int:
+        """Gets the idx of this Plant.
 
 
-        :return: The id of this Plant.
+        :return: The idx of this Plant.
         :rtype: int
         """
-        return self._id
+        return self._idx
 
-    @id.setter
-    def id(self, id: int):
-        """Sets the id of this Plant.
+    @idx.setter
+    def idx(self, idx: int):
+        """Sets the idx of this Plant.
 
 
-        :param id: The id of this Plant.
-        :type id: int
+        :param idx: The idx of this Plant.
+        :type idx: int
         """
-        if id is None:
-            raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
+        if idx is None:
+            raise ValueError("Invalid value for `idx`, must not be `None`")  # noqa: E501
 
-        self._id = id
+        self._idx = idx
 
     @property
     def common_name(self) -> str:
