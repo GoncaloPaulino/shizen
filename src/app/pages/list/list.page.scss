@@ -1,3 +1,17 @@
+.toolbar{
+    color: white;
+    --background: none;
+    background: linear-gradient(121deg, #1cd89f 0%, #13ad7f 50%, #1cd89f 100%) 0 0/600% 600% no-repeat;
+
+    animation: AnimationName 8s ease infinite;
+
+    @keyframes AnimationName {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+}
+
 ion-title{
     position: absolute;
     top: 0;
@@ -5,4 +19,51 @@ ion-title{
     width: 100%;
     height: 100%;
     text-align: center;
+}
+
+.plant-thumb{
+    width: 15vh;
+    height: 15vh;
+    float: left;
+    margin-left: 0.5vh;
+    margin-right: 0.5vh;
+    margin-bottom: 1vh;
+}
+
+.fav{
+    border: 4px solid var(--ion-color-secondary);
+}
+
+.not-fav{
+    border: 2px solid var(--ion-color-primary);
+}
+
+.plant-thumb + .main-img{
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+#plants{
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.fav-toggle{
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.contents{
+    width: 15vh;
+    height: 15vh;
+    position: absolute;
+    z-index: 0;
 }

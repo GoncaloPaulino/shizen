@@ -29,7 +29,6 @@ export class AuthService {
         return from(this.storage.get(TOKEN_KEY));
       }),
       map(token => {
-        console.log("Token from storage: ", token);
         if(token){
           let decoded = helper.decodeToken(token as string);
 
@@ -52,11 +51,10 @@ export class AuthService {
       take(1),
       map(res => {
         // Extract the JWT, here we just fake it
-        return `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1Njc2NjU3MDYsImV4cCI6MTU5OTIwMTcwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoiMTIzNDUiLCJmaXJzdF9uYW1lIjoiSm_Do28iLCJsYXN0X25hbWUiOiJDw6NvIiwiZW1haWwiOiJqb2FvQGNhbmlsLnB0In0.7ZZsiIt_j7bm134XaigJ23t9sIu2flFLQY3usNRpxs4`;
+        return `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1Njc2NjU3MDYsImV4cCI6MTU5OTIwMTcwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoiMTIzNDUiLCJuYW1lIjoiSm_Do28gQ8OjbyIsImVtYWlsIjoiam9hb0BjYW5pbC5wdCJ9.H6P_NPtSS-W_O8ggQr-Khj_S9zmBCON_C2lEtLJ_jDw`;
       }),
       switchMap(token => {
         let decoded = helper.decodeToken(token);
-        console.log("Login decoded: ", decoded);
         this.userData.next(decoded);
  
         let storageObs = from(this.storage.set(TOKEN_KEY, token));

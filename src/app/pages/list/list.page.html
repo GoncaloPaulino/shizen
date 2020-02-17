@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar class="toolbar">
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="menu/main"></ion-back-button>
     </ion-buttons>
@@ -9,5 +9,19 @@
 </ion-header>
 
 <ion-content>
+  <ion-row>
+    <ion-col size="11" offset="0.5">
+      <div id="plants">
+        <div class="plant-thumb" *ngFor="let p of plants">
+          <div class="contents">
+            <img *ngIf="userfavs.indexOf(p.id)!==-1" class="main-img fav" src="../../../assets/plants/{{ p.id }}.png">
+            <img *ngIf="userfavs.indexOf(p.id)===-1" class="main-img not-fav" src="../../../assets/plants/{{ p.id }}.png">
+            <img *ngIf="userfavs.indexOf(p.id)!==-1" (click)="toggleFav(p.id)" class="fav-toggle" src="../../../assets/heart.png">
+            <img *ngIf="userfavs.indexOf(p.id)===-1" (click)="toggleFav(p.id)" class="fav-toggle" src="../../../assets/heart_empty.png">
+          </div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
 
 </ion-content>
