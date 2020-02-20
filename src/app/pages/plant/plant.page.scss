@@ -1,0 +1,49 @@
+.toolbar{
+    color: white;
+    --background: none;
+    background: linear-gradient(121deg, #1cd89f 0%, #13ad7f 50%, #1cd89f 100%) 0 0/600% 600% no-repeat;
+
+    animation: AnimationName 8s ease infinite;
+
+    @keyframes AnimationName {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+}
+
+ion-title{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+#main-title{
+    font-size: 2.5em;
+    line-height: 85%;
+    margin-bottom: 0.5em;
+}
+
+#sub-title{
+    margin-top:0.5em;
+    color: #62646B;
+}
+
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 70%;
+    height: 70vw;
+    border: 3px solid var(--ion-color-secondary);
+    border-radius: 5%;
+}
+
+#desc{
+    color: #83858C;
+}

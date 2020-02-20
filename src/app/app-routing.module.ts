@@ -31,6 +31,11 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'plant',
+    loadChildren: () => import('./pages/plant/plant.module').then( m => m.PlantPageModule),
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

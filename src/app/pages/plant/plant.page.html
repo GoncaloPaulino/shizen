@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes da Planta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="11" offset="0.5">
+      <ion-text color="dark"><h1 id="main-title">{{plant.common_name}} Indiano</h1></ion-text>
+      <img src="../../../assets/plants/{{plant.id}}.png">
+      <ion-text><h4 id="sub-title">{{plant.scientific_name}}</h4></ion-text>
+      <div id="desc">
+        {{plant.description}}
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-content>

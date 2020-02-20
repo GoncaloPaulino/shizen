@@ -14,8 +14,8 @@
       <div id="plants">
         <div class="plant-thumb" *ngFor="let p of plants">
           <div class="contents">
-            <img *ngIf="userfavs.indexOf(p.id)!==-1" class="main-img fav" src="../../../assets/plants/{{ p.id }}.png">
-            <img *ngIf="userfavs.indexOf(p.id)===-1" class="main-img not-fav" src="../../../assets/plants/{{ p.id }}.png">
+            <img *ngIf="userfavs.indexOf(p.id)!==-1" (click)="openPlantInfo(p.id)" class="main-img fav" src="../../../assets/plants/{{ p.id }}.png">
+            <img *ngIf="userfavs.indexOf(p.id)===-1" (click)="openPlantInfo(p.id)" class="main-img not-fav" src="../../../assets/plants/{{ p.id }}.png">
             <img *ngIf="userfavs.indexOf(p.id)!==-1" (click)="toggleFav(p.id)" class="fav-toggle" src="../../../assets/heart.png">
             <img *ngIf="userfavs.indexOf(p.id)===-1" (click)="toggleFav(p.id)" class="fav-toggle" src="../../../assets/heart_empty.png">
           </div>

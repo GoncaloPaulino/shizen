@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { $ } from 'protractor';
+import { Router } from '@angular/router';
+import { PlantService } from 'src/app/services/plant.service';
 
 @Component({
   selector: 'app-list',
@@ -21,9 +23,17 @@ export class ListPage implements OnInit {
 
   userfavs = [1];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private plnts: PlantService
+    ) { }
 
   ngOnInit() {
+  }
+
+  openPlantInfo(id: number){
+    this.plnts.setSelPlant(id);
+    this.router.navigateByUrl('/plant');
   }
 
   toggleFav(id: number){
