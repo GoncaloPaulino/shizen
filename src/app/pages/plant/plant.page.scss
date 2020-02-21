@@ -23,8 +23,10 @@ ion-title{
 
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,900);
 
-$border-radius-size: 14px;
-$barbarian: #EC9B3B;
+//$border-radius-size: 14px;
+$border-radius-size: 0px;
+//$barbarian: #EC9B3B;
+$barbarian: var(--ion-color-primary);
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -39,22 +41,7 @@ ion-content {
   margin-top: 30px;
 }
 
-.slide-container {
-  margin: auto;
-  width: 600px;
-  text-align: center;
-}
-
-.wrapper {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  
-  &:focus {
-    outline: 0;
-  }
-}
-
-.clash-card {
+/*.clash-card-old {
   background: white;
   width: 300px;
   display: inline-block;
@@ -64,6 +51,12 @@ ion-content {
   text-align: center;
   box-shadow: -1px 15px 30px -12px black;
   z-index: 9999;
+}*/
+
+.clash-card {
+  background: white;
+  margin: auto;
+  text-align: center;
 }
 
 .clash-card__image {
@@ -75,12 +68,11 @@ ion-content {
 }
 
 .clash-card__image--barbarian {
-  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/barbarian-bg.jpg');
+  background: url('../../../assets/bgplant.png');
+  background-size: cover;
+
   img {
-    width: 400px;
-    position: absolute;    
-    top: -65px;
-    left: -70px;
+    max-height: 100%;
   }
 }
 
@@ -111,12 +103,15 @@ ion-content {
   background: $barbarian;
   
   .one-third {
-     border-right: 1px solid #BD7C2F;
+     //border-right: 1px solid #BD7C2F;
+     border-right: 1px solid var(--ion-color-primary-shade);
   }
 }
 
 .clash-card__unit-stats {
-  
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   color: white;
   font-weight: 700;
   border-bottom-left-radius: $border-radius-size;
