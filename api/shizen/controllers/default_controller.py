@@ -1,6 +1,12 @@
+import os
+
 import connexion
 import mariadb
 import six
+import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+import time
 
 from shizen.models.plant import Plant  # noqa: E501
 from shizen import util
@@ -65,7 +71,38 @@ def recognize(body=None):  # noqa: E501
     :rtype: Plant
    """
 
-    with open('C:\\Users\\trwyg\\Desktop\\file.png', 'wb') as file:
+    plant_path = "imgs/" + str(int(round(time.time() * 1000))) + ".png"
+
+    with open(plant_path, 'wb') as file:
         file.write(body)
 
-    return get_plant(1)
+    IMG_SIZE = 224
+    loaded_model = load_model('tf_model/model.h5')
+    img_holder = np.zeros((1, IMG_SIZE, IMG_SIZE, 3))
+
+    img = image.load_img(plant_path, target_size=(IMG_SIZE, IMG_SIZE))
+    img = np.array(img) / 255.0
+    img_holder[0, :] = img
+
+    result = loaded_model.predict(img_holder)
+    os.remove(plant_path)
+    classes = ["carvalho", "platano", "sobreiro"]
+
+    am = np.argmax(result[0])
+    print(result[0])
+    print(result[0][am])
+    plant_lbl = classes[am]
+
+    connection = mariadb.connect(user="root", host="localhost", database="shizen", password="")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM plants WHERE label_name=%s", (plant_lbl,))
+
+    plant = None
+    for id_plant, common_name, scientific_name, label_name, description, image_url in cursor:
+        plant = Plant(id_plant, common_name, scientific_name, label_name, description, image_url)
+        break
+
+    cursor.close()
+    connection.close()
+
+    return plant
