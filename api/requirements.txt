@@ -1,8 +1,0 @@
-connexion
-python_dateutil == 2.6.0
-setuptools >= 21.0.0
-mariadb
-numpy
-tensorflow == 2.1.0
-tensorflow-gpu == 2.1.0
-pillow
