@@ -20,10 +20,8 @@
 }
 
 #auth-form{
-    position: absolute;
-    width: 100%;
-    top: 45%;
-    transform: translateY(-45%);
+    margin-top: 1.5em;
+    margin-bottom: 3em;
 }
 
 .input-auth{
@@ -45,13 +43,6 @@
 .btn-auth{
     font-weight: bold;
     margin-top: 1em;
-}
-
-#register-block{
-    position: absolute;
-    width: 100%;
-    top: 80%;
-    transform: translateY(-80%);
 }
 
 #register-text{
