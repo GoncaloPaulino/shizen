@@ -4,17 +4,25 @@
       <ion-back-button text="" defaultHref="menu/main"></ion-back-button>
     </ion-buttons>
 
-    <ion-title>{{ user.first_name }} {{ user.last_name }} - Perfil</ion-title>
+    <ion-title>{{ user.name }} - Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="user">
-    <ion-card-content>
-      {{ user.name }} {{ user.email }}
-    </ion-card-content>
-  </ion-card>
- 
-  <ion-button expand="block" (click)="logout()">Logout</ion-button>
+  <ion-row>
+    <ion-col size="9" offset="1.5">
+      <ion-card *ngIf="user">
+        <ion-card-content>
+          <b>Nome:</b> {{ user.name }} <ion-icon class="ion-float-end" name="create" color="primary" (click)="changename()"></ion-icon>
+          <br/>
+          <b>E-mail:</b> {{ user.email }} <ion-icon class="ion-float-end" name="create" color="primary" (click)="changemail()"></ion-icon>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="8" offset="2">
+      <ion-button expand="block" color="primary" (click)="changepass()">Mudar Password</ion-button>
+      <ion-button expand="block" color="secondary" (click)="logout()">Sair</ion-button>
+    </ion-col>
+  </ion-row>
  
 </ion-content>
