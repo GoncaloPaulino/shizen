@@ -10,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
   credentials = {
-    email: 'test',
+    email: 'manuoliva@sapo.pt',
     pw: 'test'
   };
  
@@ -29,7 +29,8 @@ export class LoginPage implements OnInit {
       return;
     }
     this.auth.login(this.credentials).subscribe(async res => {
-      if (res) {
+      if(res==null) return;
+      if (res.localeCompare("AUTH_ERROR")!=0) {
         this.router.navigateByUrl('/menu');
       } else {
         this.showAlert("Credenciais inválidos.")

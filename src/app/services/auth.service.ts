@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Platform } from '@ionic/angular';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Platform, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, BehaviorSubject, from, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { Observable, BehaviorSubject, from, of, throwError } from 'rxjs';
+import { switchMap, map, take, catchError } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import '../../const'
 import { AUTH_LOGIN } from '../../const';
@@ -20,7 +20,8 @@ export class AuthService {
   private userData = new BehaviorSubject(null);
 
   constructor(private storage: Storage, private http: HttpClient,
-    private plt: Platform, private router: Router) { 
+    private plt: Platform, private router: Router,
+    private alertCtrl: AlertController) { 
       this.loadStoredToken();
      }
 
@@ -44,22 +45,48 @@ export class AuthService {
   }
 
   login(credentials: {email: string, pw: string }) {
-    // Normally make a POST request to your APi with your login credentials
-    if (credentials.email != 'test' || credentials.pw != 'test') {
-      return of(null);
-    }
-    
     const httpOptions = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Origin, X-Requested-With, Content-Type, Accept, Authorization',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
         'Content-Type': 'application/x-www-form-urlencoded'
-        }),
-        responseType: 'text' as "json",
+        })
     };
     let body = 'mail=' + credentials.email + '&pw=' + credentials.pw;
-    this.http.post<string>(AUTH_LOGIN, body, httpOptions);
+    return this.http.post<string>(AUTH_LOGIN, body, httpOptions).pipe(
+      take(1),
+      map(res => {
+        return res;
+      }),
+      switchMap(res => {
+        if(res["result_code"]!=0)
+          return of("AUTH_ERROR");
+        let token = res["user_jwt"];
+        let decoded = helper.decodeToken(token);
+        console.log("Login decoded: ", decoded);
+        this.userData.next(decoded);
+ 
+        let storageObs = from(this.storage.set(TOKEN_KEY, token));
+        return storageObs;
+      }),
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  async handleError(error: any){
+    let msg = "";
+    if(error instanceof HttpErrorResponse){
+      msg = "Ocorreu um erro ao estabelecer uma conexão com o servidor."
+    }else{
+      msg = "Ocorreu um erro desconhecido."
+    }
+    const alert = await this.alertCtrl.create({
+      header: "Erro",
+      message: msg,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   register(credentials: {name: string, email: string, pw: string }) {
