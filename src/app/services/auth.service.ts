@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, BehaviorSubject, from, of } from 'rxjs';
-import { switchMap, map, take } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
+import '../../const'
+import { AUTH_LOGIN } from '../../const';
 
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'jwt-token';
@@ -46,21 +48,18 @@ export class AuthService {
     if (credentials.email != 'test' || credentials.pw != 'test') {
       return of(null);
     }
- 
-    return this.http.get('https://randomuser.me/api/').pipe(
-      take(1),
-      map(res => {
-        // Extract the JWT, here we just fake it
-        return `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1Njc2NjU3MDYsImV4cCI6MTU5OTIwMTcwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoiMTIzNDUiLCJuYW1lIjoiSm_Do28gQ8OjbyIsImVtYWlsIjoiam9hb0BjYW5pbC5wdCJ9.H6P_NPtSS-W_O8ggQr-Khj_S9zmBCON_C2lEtLJ_jDw`;
-      }),
-      switchMap(token => {
-        let decoded = helper.decodeToken(token);
-        this.userData.next(decoded);
- 
-        let storageObs = from(this.storage.set(TOKEN_KEY, token));
-        return storageObs;
-      })
-    );
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Origin, X-Requested-With, Content-Type, Accept, Authorization',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+        'Content-Type': 'application/x-www-form-urlencoded'
+        }),
+        responseType: 'text' as "json",
+    };
+    let body = 'mail=' + credentials.email + '&pw=' + credentials.pw;
+    this.http.post<string>(AUTH_LOGIN, body, httpOptions);
   }
 
   register(credentials: {name: string, email: string, pw: string }) {

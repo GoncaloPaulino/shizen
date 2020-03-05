@@ -10,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
   credentials = {
-    email: '',
+    email: 'test',
     pw: 'test'
   };
  
