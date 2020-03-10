@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Platform, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -8,6 +7,7 @@ import { switchMap, map, take, catchError } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import '../../const'
 import { AUTH_LOGIN } from '../../const';
+import { HTTP } from '@ionic-native/http/ngx';
 
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'jwt-token';
@@ -19,7 +19,7 @@ export class AuthService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
 
-  constructor(private storage: Storage, private http: HttpClient,
+  constructor(private storage: Storage, private http: HTTP,
     private plt: Platform, private router: Router,
     private alertCtrl: AlertController) { 
       this.loadStoredToken();
@@ -46,25 +46,23 @@ export class AuthService {
 
   login(credentials: {email: string, pw: string }) {
     const httpOptions = {
-      headers: new HttpHeaders({
-        'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Origin, X-Requested-With, Content-Type, Accept, Authorization',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
         'Content-Type': 'application/x-www-form-urlencoded'
-        })
     };
     let body = 'mail=' + credentials.email + '&pw=' + credentials.pw;
-    return this.http.post<string>(AUTH_LOGIN, body, httpOptions).pipe(
+
+    this.http.setDataSerializer( "utf8" );
+    let call = this.http.post(AUTH_LOGIN, body, httpOptions);
+    return from(call).pipe(
       take(1),
       map(res => {
         return res;
       }),
       switchMap(res => {
-        if(res["result_code"]!=0)
+        let json_data = JSON.parse(res.data);
+        if(json_data["result_code"]!=0)
           return of("AUTH_ERROR");
-        let token = res["user_jwt"];
+        let token = json_data["user_jwt"];
         let decoded = helper.decodeToken(token);
-        console.log("Login decoded: ", decoded);
         this.userData.next(decoded);
  
         let storageObs = from(this.storage.set(TOKEN_KEY, token));
@@ -76,17 +74,17 @@ export class AuthService {
 
   async handleError(error: any){
     let msg = "";
-    if(error instanceof HttpErrorResponse){
-      msg = "Ocorreu um erro ao estabelecer uma conexão com o servidor."
+    if(error["status"]==-4){
+      msg = "Ocorreu um erro ao estabelecer uma conexão com o servidor.";
     }else{
-      msg = "Ocorreu um erro desconhecido."
+      msg = "Ocorreu um erro desconhecido.";
     }
     const alert = await this.alertCtrl.create({
       header: "Erro",
       message: msg,
       buttons: ['OK']
     });
-    await alert.present();
+    alert.present();
   }
 
   register(credentials: {name: string, email: string, pw: string }) {
