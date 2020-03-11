@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
-import { ActionSheetController, AlertController, LoadingController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { catchError, take, map, switchMap } from 'rxjs/operators';
 import { API } from 'src/const';
 import { HTTP } from '@ionic-native/http/ngx';
 import { from, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { PlantService } from 'src/app/services/plant.service';
+import { AppVarsService } from 'src/app/services/app-vars.service';
 
 @Component({
   selector: 'app-main',
@@ -22,7 +22,8 @@ export class MainPage implements OnInit {
     private http: HTTP,
     private loadCtrl: LoadingController,
     private router: Router,
-    private plnts: PlantService
+    private vars: AppVarsService,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {}
@@ -34,7 +35,7 @@ export class MainPage implements OnInit {
     await loading.present();
     let bin = this.convertDataURIToBinary(b64img);
     this.classifyImage(bin).subscribe(async (res) => {
-      this.plnts.setSelPlant(Number(res["idx"]));
+      this.vars.setSelPlant(Number(res["idx"]));
       loading.dismiss();
       this.showAlert("Planta Identificada", res["common_name"])
       this.router.navigateByUrl('/plant');
@@ -57,9 +58,14 @@ export class MainPage implements OnInit {
       await loading.present();
       let bin = this.convertDataURIToBinary(imageData);
       this.classifyImage(bin).subscribe(async (res) => {
-        this.plnts.setSelPlant(Number(res["idx"]));
+        this.vars.setSelPlant(Number(res["idx"]));
         loading.dismiss();
-        this.showAlert("Planta Identificada", res["common_name"])
+        const toast = await this.toastCtrl.create({
+          message: 'Planta identificada: ' + res["common_name"],
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
         this.router.navigateByUrl('/plant');
       });
     }, async (err) => {

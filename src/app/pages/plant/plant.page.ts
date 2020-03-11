@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PlantService } from 'src/app/services/plant.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router'
+import { AppVarsService } from 'src/app/services/app-vars.service';
 
 @Component({
   selector: 'app-plant',
@@ -20,12 +20,12 @@ export class PlantPage implements OnInit {
 
   constructor(
     private router: Router,
-    private plnts: PlantService,
+    private vars: AppVarsService,
     private activatedRoute : ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.url.subscribe(url =>{
-      let selid = this.plnts.getSelPlant();
+      let selid = this.vars.getSelPlant();
       if(selid==null){
         this.router.navigateByUrl('/list');
       }else{

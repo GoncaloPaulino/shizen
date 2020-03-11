@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { $ } from 'protractor';
 import { Router } from '@angular/router';
-import { PlantService } from 'src/app/services/plant.service';
+import { AppVarsService } from 'src/app/services/app-vars.service';
 
 @Component({
   selector: 'app-list',
@@ -29,14 +29,14 @@ export class ListPage implements OnInit {
 
   constructor(
     private router: Router,
-    private plnts: PlantService
+    private vars: AppVarsService
     ) { }
 
   ngOnInit() {
   }
 
   openPlantInfo(id: number){
-    this.plnts.setSelPlant(id);
+    this.vars.setSelPlant(id);
     this.router.navigateByUrl('/plant');
   }
 
