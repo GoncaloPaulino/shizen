@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, take } from 'rxjs/operators';
 import { from, Observable, of } from 'rxjs';
 import { Platform, AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -38,29 +38,43 @@ export class PlantService {
     );
     await platObs.pipe(
       switchMap(() =>{ return from(this.storage.get(PLANTS_KEY)); }),
-      map(plts => { if(plts) this.plants = plts; else this.getPlantsDb();})
+      map(plts => { if(plts) this.plants = plts; else this.plants = null;})
     );
   }
 
   async getPlantsDb(){
-    if(this.last_update < 1000){
+    console.log("uyty");
+    console.log(String(this.last_update));
+    if(this.last_update < 1000 || this.last_update==undefined){
+      console.log("saf");
       let first = this.last_update==-1;
       let load = await this.loadCtrl.create({
         spinner: "dots",
         message: (first ? "Obtendo a lista de plantas.." : "Atualizando a lista de plantas...")
       });
       load.present();
+      console.log("hghrth");
       this.updatePlants(first, load);
     }
   }
 
   updatePlants(first: boolean, load:any){
+    console.log("j76");
     this.http.setDataSerializer( "utf8" );
+    console.log("k876eg");
     let call = this.http.get(API + "plants", {}, {});
+    console.log("i87i");
     from(call).pipe(
+      take(1),
       map(res => {
-        this.plants = [];
-        for (var i of JSON.parse(res.data)) {
+        return res;
+      }),
+      switchMap(res => {
+        let plants : Plant[] = [];
+        console.log("ty54y");
+        for (var i of JSON.parse(String(res))) {
+          
+          console.log("vv");
           let plnt : Plant = {
             id: i.idx,
             common_name: i.common_name,
@@ -68,14 +82,19 @@ export class PlantService {
             label_name: i.label_name,
             description: i.description
           };
-          this.plants.push(plnt);
-         }
-         load.dismiss();
+          plants.push(plnt);
+        }
+        console.log("fa4");
+        return of<Plant[]>(plants);
       }),
       catchError(error => this.handleError(error, first))
-    );
+    ).subscribe((plants : Plant[]) =>{
+      this.plants = plants;
+      load.dismiss();
+      console.log("f4");
+    });
   }
-
+  
   private async handleError(error: any, first: boolean){
     if(first){
       const alert = await this.alertCtrl.create({
@@ -92,7 +111,7 @@ export class PlantService {
       await alert.present();
     }else{
       const toast = await this.toastCtrl.create({
-        message: 'Não foi possível atualizar a lista de plantas.',
+        message: 'Não foi possível atualizar a lista de plantas.' + error.message,
         duration: 4000,
         position: 'bottom'
       });

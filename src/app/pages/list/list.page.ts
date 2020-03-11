@@ -37,11 +37,15 @@ export class ListPage implements OnInit {
   ngOnInit() {
   }
 
-  openPlantInfo(id: number){
-    this.plantsServ.loadStoredData();
-    this.plantsServ.getPlants().forEach(plant=>{
-      console.log(plant.common_name);
-    });
+  async openPlantInfo(id: number){
+    console.log("33f");
+    if(this.plantsServ.getPlants() == null){
+      console.log("888888");
+      this.plantsServ.getPlantsDb();
+      /*this.plantsServ.getPlants().forEach(plant=>{
+        console.log(plant.common_name);
+      });*/
+    }
     /*this.vars.setSelPlant(id);
     this.router.navigateByUrl('/plant');*/
   }
