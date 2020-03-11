@@ -17,6 +17,10 @@ export class ListPage implements OnInit {
     },
     {
       id: 2,
+      name: "Platano"
+    },
+    {
+      id: 3,
       name: "Sobreiro"
     }
   ];
