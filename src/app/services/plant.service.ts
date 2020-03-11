@@ -38,7 +38,7 @@ export class PlantService {
     );
     await platObs.pipe(
       switchMap(() =>{ return from(this.storage.get(PLANTS_KEY)); }),
-      map(plts => { if(plts) this.plants = plts; else this.plants = null;})
+      map(plts => { if(plts) this.plants = plts; else this.getPlantsDb();})
     );
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { $ } from 'protractor';
 import { Router } from '@angular/router';
 import { AppVarsService } from 'src/app/services/app-vars.service';
+import { PlantService } from 'src/app/services/plant.service';
 
 @Component({
   selector: 'app-list',
@@ -29,15 +30,20 @@ export class ListPage implements OnInit {
 
   constructor(
     private router: Router,
-    private vars: AppVarsService
+    private vars: AppVarsService,
+    private plantsServ: PlantService
     ) { }
 
   ngOnInit() {
   }
 
   openPlantInfo(id: number){
-    this.vars.setSelPlant(id);
-    this.router.navigateByUrl('/plant');
+    this.plantsServ.loadStoredData();
+    this.plantsServ.getPlants().forEach(plant=>{
+      console.log(plant.common_name);
+    });
+    /*this.vars.setSelPlant(id);
+    this.router.navigateByUrl('/plant');*/
   }
 
   toggleFav(id: number){
