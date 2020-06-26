@@ -7,6 +7,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { from, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { AppVarsService } from 'src/app/services/app-vars.service';
+import { PlantService } from 'src/app/services/plant.service';
 
 @Component({
   selector: 'app-main',
@@ -23,10 +24,13 @@ export class MainPage implements OnInit {
     private loadCtrl: LoadingController,
     private router: Router,
     private vars: AppVarsService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private pltsrv: PlantService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pltsrv.getUserFavsFromDB();
+  }
 
   async pickImage(sourceType) {
 

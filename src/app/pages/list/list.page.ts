@@ -26,36 +26,32 @@ export class ListPage implements OnInit {
     }
   ];
 
-  userfavs = [1];
+  userfavs = [];
 
   constructor(
     private router: Router,
     private vars: AppVarsService,
     private plantsServ: PlantService
-    ) { }
+    ) { 
+    }
 
   ngOnInit() {
+    this.userfavs = this.plantsServ.getUserFavs();
+    console.log(JSON.stringify(this.userfavs));
   }
 
   async openPlantInfo(id: number){
-    console.log("33f");
-    if(this.plantsServ.getPlants() == null){
-      console.log("888888");
-      this.plantsServ.getPlantsDb();
-      /*this.plantsServ.getPlants().forEach(plant=>{
-        console.log(plant.common_name);
-      });*/
-    }
-    /*this.vars.setSelPlant(id);
-    this.router.navigateByUrl('/plant');*/
+    await this.plantsServ.getPlantsDb();
+    this.vars.setSelPlant(id);
+    this.router.navigateByUrl('/plant');
   }
 
-  toggleFav(id: number){
-    let index: number = this.userfavs.indexOf(id);
-    if(index===-1)
-      this.userfavs.push(id);
+  async toggleFav(id: number){
+    await this.plantsServ.toggleFavourite(id);
+    if(this.userfavs.includes(id, 0))
+      this.userfavs.splice(this.userfavs.indexOf(id, 0), 1);
     else
-      this.userfavs.splice(index, 1);
+      this.userfavs.push(id);
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router'
 import { AppVarsService } from 'src/app/services/app-vars.service';
+import { Plant, PlantService } from 'src/app/services/plant.service';
 
 @Component({
   selector: 'app-plant',
@@ -10,18 +11,13 @@ import { AppVarsService } from 'src/app/services/app-vars.service';
 })
 export class PlantPage implements OnInit {
 
-  plant = {
-    id: 1,
-    common_name: "Carvalho",
-    scientific_name: "Quercus coccifera",
-    label_name: "carvalho",
-    description: "Carvalho é a designação comum das cerca de seiscentas espécies de árvores do género Quercus da família Fagaceae e de outros géneros relacionados, nomeadamente Lithocarpus."
-  }
+  plant: Plant[];
 
   constructor(
     private router: Router,
     private vars: AppVarsService,
-    private activatedRoute : ActivatedRoute) { }
+    private activatedRoute : ActivatedRoute,
+    private plantsServ: PlantService) { }
 
   ngOnInit() {
     this.activatedRoute.url.subscribe(url =>{
@@ -29,7 +25,7 @@ export class PlantPage implements OnInit {
       if(selid==null){
         this.router.navigateByUrl('/list');
       }else{
-        this.plant.id = selid;
+        this.plant = this.plantsServ.getPlants()[selid];
       }
     });
   }

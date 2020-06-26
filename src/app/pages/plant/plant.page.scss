@@ -33,15 +33,11 @@ $barbarian: var(--ion-color-primary);
 }
 
 ion-content {
-  background: linear-gradient(to bottom, rgba(140,122,122,1) 0%, rgba(175,135,124,1) 65%, rgba(175,135,124,1) 100%) fixed;
-  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/coc-background.jpg') no-repeat center center fixed;
-  background-size: cover;
   font: 14px/20px "Lato", Arial, sans-serif;
-  color: #9E9E9E;
   margin-top: 30px;
 }
 
-/*.clash-card-old {
+/*.flower-old {
   background: white;
   width: 300px;
   display: inline-block;
@@ -53,13 +49,15 @@ ion-content {
   z-index: 9999;
 }*/
 
-.clash-card {
+.flower {
   background: white;
   margin: auto;
   text-align: center;
+  overflow: scroll;
+  margin-bottom: 20px;
 }
 
-.clash-card__image {
+.flower__image {
   position: relative;
   height: 230px;
   margin-bottom: 35px;
@@ -67,39 +65,39 @@ ion-content {
   border-top-right-radius: $border-radius-size;
 }
 
-.clash-card__image--barbarian {
-  background: url('../../../assets/bgplant.png');
-  background-size: cover;
-
+.flower__image--barbarian {
   img {
     max-height: 100%;
+    border-bottom: 4px solid var(--ion-color-primary);
+    border-left: 4px solid var(--ion-color-primary);
+    border-right: 4px solid var(--ion-color-primary);
   }
 }
 
-.clash-card__level {
+.flower__level {
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 3px;
 }
 
-.clash-card__level--barbarian {
+.flower__level--barbarian {
   color: $barbarian;
 }
 
-.clash-card__unit-name {
+.flower__unit-name {
   font-size: 26px;
   color: black;
   font-weight: 900;
   margin-bottom: 5px;
 }
 
-.clash-card__unit-description {
+.flower__unit-description {
   padding: 20px;
   margin-bottom: 10px;  
 }
 
-.clash-card__unit-stats--barbarian {
+.flower__unit-stats--barbarian {
   background: $barbarian;
   
   .one-third {
@@ -108,7 +106,8 @@ ion-content {
   }
 }
 
-.clash-card__unit-stats {
+.flower__unit-stats {
+  text-align: center;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -116,7 +115,7 @@ ion-content {
   font-weight: 700;
   border-bottom-left-radius: $border-radius-size;
   border-bottom-right-radius: $border-radius-size;
-  
+
   .one-third {
     width: 33%;
     float: left;

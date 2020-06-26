@@ -8,33 +8,47 @@
 </ion-header>
 
 <ion-content>
-      <div class="clash-card barbarian">
-        <div class="clash-card__image clash-card__image--barbarian">
+      <div class="flower barbarian">
+        <div class="flower__image flower__image--barbarian">
           <img src="../../../assets/plants/{{plant.id}}.png"/>
         </div>
-        <div class="clash-card__level clash-card__level--barbarian">Quercus faginea</div>
-        <div class="clash-card__unit-name">Carvalho Português</div>
-        <div class="clash-card__unit-description">
-          O carvalho-português tem folhas marcescentes. Assim como os demais carvalhos, produz a bolota ou landra como fruto, que é usada como alimento por vários animais, como o javali, os esquilos, que muitas vezes as enterram e se esquecem, acabando por ser plantadores naturais da espécie.
+        <div class="flower__level flower__level--barbarian">{{ plant.scientific_name }}</div>
+        <div class="flower__unit-name">{{ plant.common_name }}</div>
+        <div class="flower__unit-description">
+
+          <b>Altura:</b> {{ plant.min_height }} a {{ plant.max_height }} cm.
+          <br/>
+          <b>Nativa de:</b> {{ plant.native }}
+          <br/>
+          {{ plant.description }}
+          <br/><br/>
+          <i>Clique para comprar esta flor.</i>
+          <br/>
+          <i>Clique para comprar sementes desta flor.</i>
+          <br/><br/>
+          {{ plant.more_info }}
         </div>
   
-        <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
-          <div class="one-third">
-            <div class="stat">Caduca</div>
-            <div class="stat-value">Folhagem</div>
-          </div>
+        
   
-          <div class="one-third">
-            <div class="stat">≤ 25m</div>
-            <div class="stat-value">Altura</div>
-          </div>
-  
-          <div class="one-third no-border">
-            <div class="stat">300</div>
-            <div class="stat-value">Idade (Anos)</div>
-          </div>
-  
+      </div> <!-- end flower barbarian-->
+
+      <div class="flower__unit-stats flower__unit-stats--barbarian clearfix">
+        <div class="one-third">
+          <div class="stat" *ngIf="plant.classifiable == 1">Sim</div>
+          <div class="stat" *ngIf="plant.classifiable == 0">Não</div>
+          <div class="stat-value">Classificável</div>
         </div>
-  
-      </div> <!-- end clash-card barbarian-->
+
+        <div class="one-third">
+          <div class="stat">+</div>
+          <div class="stat-value">Favoritos</div>
+        </div>
+
+        <div class="one-third no-border">
+          <div class="stat">Wiki</div>
+          <div class="stat-value">Info+</div>
+        </div>
+
+      </div>
 </ion-content>

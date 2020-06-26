@@ -6,11 +6,12 @@ import { Observable, BehaviorSubject, from, of, throwError } from 'rxjs';
 import { switchMap, map, take, catchError } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import '../../const'
-import { AUTH_LOGIN } from '../../const';
+import { AUTH_LOGIN, AUTH_REG } from '../../const';
 import { HTTP } from '@ionic-native/http/ngx';
 
 const helper = new JwtHelperService();
 const TOKEN_KEY = 'jwt-token';
+const USER_FAVS_KEY = 'user-fav';
 
 @Injectable({
   providedIn: 'root'
@@ -88,7 +89,24 @@ export class AuthService {
   }
 
   register(credentials: {name: string, email: string, pw: string }) {
-    return of(null);
+    const httpOptions = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+  let body = 'mail=' + credentials.email + '&pw=' + credentials.pw + "&name=" + credentials.name;
+
+  this.http.setDataSerializer( "utf8" );
+  console.log(body);
+  let call = this.http.post(AUTH_REG, body, httpOptions);
+  return from(call).pipe(
+    take(1),
+    map(res => {
+      return res;
+    }),
+    switchMap(res => {
+      return res.data;
+    }),
+    catchError(error => this.handleError(error))
+  );
   }
 
   getUser() {
@@ -97,8 +115,10 @@ export class AuthService {
  
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
-      this.router.navigateByUrl('/login');
       this.userData.next(null);
+      this.storage.remove(USER_FAVS_KEY).then(()=>{
+        this.router.navigateByUrl('/login');
+      });
     });
   }
 }
