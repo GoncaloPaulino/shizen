@@ -6,7 +6,7 @@ import { Observable, BehaviorSubject, from, of, throwError } from 'rxjs';
 import { switchMap, map, take, catchError } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import '../../const'
-import { AUTH_LOGIN, AUTH_REG } from '../../const';
+import { AUTH_LOGIN, AUTH_REG, PASS_RECOVER } from '../../const';
 import { HTTP } from '@ionic-native/http/ngx';
 
 const helper = new JwtHelperService();
@@ -95,7 +95,6 @@ export class AuthService {
   let body = 'mail=' + credentials.email + '&pw=' + credentials.pw + "&name=" + credentials.name;
 
   this.http.setDataSerializer( "utf8" );
-  console.log(body);
   let call = this.http.post(AUTH_REG, body, httpOptions);
   return from(call).pipe(
     take(1),
@@ -107,6 +106,27 @@ export class AuthService {
     }),
     catchError(error => this.handleError(error))
   );
+  }
+
+  recoverPassword(email: string) {
+    const httpOptions = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    let body = 'mail=' + email;
+
+    this.http.setDataSerializer( "utf8" );
+    let call = this.http.post(PASS_RECOVER, body, httpOptions);
+    return from(call).pipe(
+      take(1),
+      map(res => {
+        return res;
+      }),
+      switchMap(res => {
+        console.log(res.data);
+        return res.data;
+      }),
+      catchError(error => this.handleError(error))
+    );
   }
 
   getUser() {
