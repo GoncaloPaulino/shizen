@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
       if (res.localeCompare("AUTH_ERROR")!=0) {
         this.router.navigateByUrl('/menu');
       } else {
-        this.showAlert("Credenciais inválidos.")
+        this.showAlert("Credenciais inválidos.");
       }
     });
   }

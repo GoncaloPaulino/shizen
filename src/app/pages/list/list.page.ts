@@ -14,15 +14,19 @@ export class ListPage implements OnInit {
   plants = [
     {
       id: 1,
-      name: "Carvalho"
+      name: "Rosa"
     },
     {
       id: 2,
-      name: "Platano"
+      name: "Tulipa"
     },
     {
       id: 3,
-      name: "Sobreiro"
+      name: "Girassol"
+    },
+    {
+      id: 4,
+      name: "Margarida"
     }
   ];
 

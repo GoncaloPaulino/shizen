@@ -1,7 +1,7 @@
 .toolbar{
     color: white;
     --background: none;
-    background: linear-gradient(121deg, #1cd89f 0%, #13ad7f 50%, #1cd89f 100%) 0 0/600% 600% no-repeat;
+    background: linear-gradient(121deg,  #1cd89f 0%, #13ad7f 50%, #1cd89f 100%) 0 0/600% 600% no-repeat;
 
     animation: AnimationName 8s ease infinite;
 
@@ -12,6 +12,17 @@
     }
 }
 
+ion-content{
+    --background: #4ec29f;
+}
+ion-grid{
+    margin-top: 1.5em;
+}
+
+ion-card{
+    --background: white;
+}
+
 ion-title{
     position: absolute;
     top: 0;
@@ -19,4 +30,20 @@ ion-title{
     width: 100%;
     height: 100%;
     text-align: center;
+}
+
+/*ion-grid{
+    display: table !important;
+    width: 70% !important;
+    height: 100% !important;
+}
+
+ion-row{
+    display: table-cell;
+    vertical-align: middle;
+}*/
+
+.yo{
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
 }
