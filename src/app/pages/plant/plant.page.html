@@ -22,11 +22,7 @@
           <br/>
           {{ plant.description }}
           <br/><br/>
-          <i>Clique para comprar esta flor.</i>
-          <br/>
-          <i>Clique para comprar sementes desta flor.</i>
-          <br/><br/>
-          {{ plant.more_info }}
+          <i>Fonte: Jardim Botânico UTAD</i>
         </div>
   
         
@@ -41,13 +37,13 @@
         </div>
 
         <div class="one-third">
-          <div class="stat">+</div>
-          <div class="stat-value">Favoritos</div>
+          <div class="stat">{{ plant.id }}</div>
+          <div class="stat-value">ID</div>
         </div>
 
-        <div class="one-third no-border">
+        <div class="one-third no-border" (click)="moreInfo()">
           <div class="stat">Wiki</div>
-          <div class="stat-value">Info+</div>
+          <div class="stat-value">Info</div>
         </div>
 
       </div>

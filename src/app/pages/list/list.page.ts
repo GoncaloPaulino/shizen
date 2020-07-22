@@ -28,6 +28,30 @@ export class ListPage implements OnInit {
     {
       id: 4,
       name: "Margarida"
+    },
+    {
+      id: 5,
+      name: "Dente-de-leão"
+    },
+    {
+      id: 6,
+      name: "Alho-de-Marrocos"
+    },
+    {
+      id: 7,
+      name: "Buglossa-ondeada"
+    },
+    {
+      id: 8,
+      name: "Alface-dos-calcários"
+    },
+    {
+      id: 9,
+      name: "Campainhas"
+    },
+    {
+      id: 10,
+      name: "Erva-piolha"
     }
   ];
 
