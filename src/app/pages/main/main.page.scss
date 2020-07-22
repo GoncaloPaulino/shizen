@@ -20,3 +20,17 @@ ion-title{
     height: 100%;
     text-align: center;
 }
+
+.imgg{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40%;
+  margin-bottom: 50%;
+  border-radius: 50%;
+  border: 4px solid var(--ion-color-primary);
+}
+
+.imgg:hover{
+  border: 16px solid var(--ion-color-secondary);
+}
