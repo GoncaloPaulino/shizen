@@ -16,6 +16,10 @@ export class ProfilePage {
     private alertCtrl: AlertController) {
     this.user = this.auth.getUser();
   }
+
+  ionViewWillEnter(){
+    this.user = this.auth.getUser();
+  }
  
   logout() {
     this.auth.logout();
@@ -153,7 +157,7 @@ export class ProfilePage {
         {
           name: 'pw',
           type: 'password',
-          placeholder: 'Palavra-passe'
+          placeholder: 'Palavra-passe antiga'
         }
       ]
     });
