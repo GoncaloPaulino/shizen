@@ -42,6 +42,7 @@ export class PlantService {
     this.http.setDataSerializer( "utf8" );
   }
 
+  //Carregar a lista de flores e outras informações guardadas na memória do telemóvel
   loadStoredData(){
     this.storage.get(LAST_UPDATE).then(lu => { if(lu) this.last_update = lu; else this.last_update = -1; });
     this.storage.get(PLANTS_KEY).then(plts => { if(plts) this.plants = plts; else this.plants = null; });
@@ -55,6 +56,7 @@ export class PlantService {
     });
   }
 
+  //Ir buscar a lista de flores à base de dados.
   async getPlantsDb(){
     console.log("Last update: " + String(this.last_update));
     if((new Date().getTime() - this.last_update) > 24*60*60*1000 || this.last_update==undefined || this.last_update==-1){
@@ -71,6 +73,7 @@ export class PlantService {
     }
   }
 
+  //Atualizar a lista de flores
   async updatePlants(first: boolean, load:any){
     let call = this.http.get(API + "flowers", {}, {});
     await from(call).pipe(
@@ -160,6 +163,7 @@ export class PlantService {
     toast.present();
   }
 
+  //Obter os favoritos de um utilizador
   async getUserFavsFromDB(){
     if(this.user_favs==null){
       this.storage.get(TOKEN_KEY).then(async tk => {
@@ -192,6 +196,7 @@ export class PlantService {
     return this.user_favs;
   }
 
+  //Favoritar e desfavoritar
   async toggleFavourite(flower: number){
     this.storage.get(TOKEN_KEY).then(async tk => {
       let id = helper.decodeToken(tk).id

@@ -11,6 +11,7 @@ import { take, map } from 'rxjs/operators';
 export class AuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router, private alertCtrl: AlertController){}
 
+  //Verificar se o usuario pode aceder a pagina
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean>{
     return this.auth.user.pipe(
       take(1),

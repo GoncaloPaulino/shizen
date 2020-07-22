@@ -33,6 +33,7 @@ export class MenuPage implements OnInit {
   ngOnInit() {
   }
 
+  //Logout
   logout(){
     this.auth.logout();
   }

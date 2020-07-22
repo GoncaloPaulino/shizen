@@ -26,12 +26,14 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
+  //Registar
   register() {
     if(this.credentials.email=="" || this.credentials.pw=="" || this.credentials.name ==""){
       this.showAlert("Por favor preencha todos os campos.");
       return;
     }
 
+    //Validar a palavra-passe e o email
     var regemail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     var regpw = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/);
 
@@ -67,6 +69,7 @@ export class RegisterPage implements OnInit {
     });
   }
 
+  //Diversas mensagens de erro
   async showAlert(msg: string){
     const alert = await this.alertCtrl.create({
       header: 'Falha no Registro',
@@ -76,6 +79,7 @@ export class RegisterPage implements OnInit {
     await alert.present();
   }
 
+  //Mensagem de erro com informação sobre como construir uma boa palavra-passe
   async showAlertPass(msg: string){
     const alert = await this.alertCtrl.create({
       header: 'Falha no Registro',

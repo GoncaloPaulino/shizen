@@ -11,6 +11,7 @@ import { PlantService } from 'src/app/services/plant.service';
 })
 export class ListPage implements OnInit {
 
+  //Lista de flores precarregada para reduzir o tempo de espera na primeira inicialização
   plants = [
     {
       id: 1,
@@ -44,12 +45,14 @@ export class ListPage implements OnInit {
     console.log(JSON.stringify(this.userfavs));
   }
 
+  //Abrir a pagina de uma planta especifica
   async openPlantInfo(id: number){
     await this.plantsServ.getPlantsDb();
     this.vars.setSelPlant(id);
     this.router.navigateByUrl('/plant');
   }
 
+  //Mudar o estado de favorito (favoritar/desfavoritar)
   async toggleFav(id: number){
     await this.plantsServ.toggleFavourite(id);
     if(this.userfavs.includes(id, 0))

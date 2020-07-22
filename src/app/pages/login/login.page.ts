@@ -24,13 +24,16 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
+  //Efetuar o login
   async login() {
     if(this.credentials.email=="" || this.credentials.pw==""){
       this.showAlert("Por favor preencha todos os campos.");
       return;
     }
+    //Criar um loading
     let loading = await this.loadCtrl.create();
     await loading.present();
+
     this.auth.login(this.credentials).subscribe(async res => {
       loading.dismiss();
       if(res==null) return;
@@ -42,10 +45,12 @@ export class LoginPage implements OnInit {
     });
   }
 
+  //Ir para a pagina de registo
   gotoregister() {
     this.router.navigateByUrl('/register');
   }
 
+  //Diversas mensagens de erro
   async showAlert(msg: string){
     const alert = await this.alertCtrl.create({
       header: 'Falha no Login',
@@ -73,6 +78,7 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
+  //Recuperar a palavra passe
   async recoverPassword(){
     const alert = await this.alertCtrl.create({
       header: 'Recuperar Password',
@@ -85,7 +91,7 @@ export class LoginPage implements OnInit {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel'
         },
         {
@@ -96,7 +102,7 @@ export class LoginPage implements OnInit {
               await this.recoError("Por favor insira o seu E-mail.");
             }else{
               alert.dismiss();
-
+              //Validacao do email
               var regemail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
               if(!regemail.test(em)){
